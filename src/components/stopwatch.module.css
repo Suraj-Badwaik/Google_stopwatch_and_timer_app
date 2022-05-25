@@ -1,0 +1,48 @@
+.App{
+    margin-top: 5%;
+}
+
+.watch{
+    width: 40%;
+    height: 350px;
+    margin: auto;
+    border: 10px solid #00b8ff;
+    background: url('https://media.gettyimages.com/photos/chronometer-picture-id1186962938?b=1&k=20&m=1186962938&s=170667a&w=0&h=W62msBHR7a2n6AJQ6KRiDp_9qK4OekYGcdE9aum5js4=') center center/cover;
+    margin-top: 5%;
+    box-sizing: border-box;
+    position: relative;
+
+}
+.watchDiv{
+    position: absolute;
+    top: 0;
+    width: 50%;
+    margin: 10% 0% 0% 10% ;
+    /* border: 2px solid red; */
+}
+h1{
+    color: #c3ecec;
+}
+
+h2{
+    color: #2b0b48;
+    font-size: 40px;
+}
+
+.btn1,.btn2,.btn3{
+    background: none;
+    margin-right:20px;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 49px;
+    padding: 0px;
+}
+
+
+.btn1 img,.btn2 img,.btn3 img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
