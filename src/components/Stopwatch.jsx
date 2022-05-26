@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./stopwatch.module.css";
 
 function msToTime(duration) {
@@ -17,25 +17,31 @@ function msToTime(duration) {
 
 const Stopwatch = () => {
   const [watch, setWatch] = useState(0);
-  const [timerId, setTimerId] = useState(null);
+  // const [timerId, setTimerId] = useState(null);
+
+  const timerId = useRef(null);
+  // timerId = {current : null}
 
   const start = () => {
-    const id = setInterval(() => {
-      if (watch > 100) {
-        clearInterval(id);
-      } else {
-        setWatch((watch) => watch + 100);
-      }
-    }, 100);
-    setTimerId(id);
+    if(!timerId.current){
+
+      let id = setInterval(() => {
+          setWatch((watch) => watch + 100);
+      }, 100);
+      timerId.current = id;
+      // setTimerId(id);
+    }
+   
   };
 
   const pause = () => {
-    clearInterval(timerId);
+    clearInterval(timerId.current);
+    timerId.current = null;
   };
 
   const reset = () => {
-    clearInterval(timerId);
+    clearInterval(timerId.current);
+    timerId.current = null;
     setWatch(0);
   };
 
