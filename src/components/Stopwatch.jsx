@@ -15,6 +15,9 @@ function msToTime(duration) {
 }
 //   console.log(msToTime(300000))
 
+
+// OPTIMISED CODE TO AVOID UNNECESSARY RERENDERS
+
 const Stopwatch = () => {
   const [watch, setWatch] = useState(0);
   // const [timerId, setTimerId] = useState(null);
