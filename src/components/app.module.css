@@ -1,0 +1,169 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #dadce0;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 12px;
+  background: none;
+  border: none;
+  border-right: 1px solid #dadce0;
+  cursor: pointer;
+  color: #202124;
+  font-family: "Google Sans", "Product Sans", Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.tab:last-child {
+  border-right: none;
+}
+
+.tabActive {
+  color: #1a73e8;
+}
+
+.tab svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  padding: 36px 24px;
+  border-bottom: 1px solid #dadce0;
+}
+
+.time {
+  margin: 0;
+  color: #202124;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  gap: 12px;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.startBtn,
+.resetBtn {
+  min-width: 88px;
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  text-transform: uppercase;
+}
+
+.startBtn {
+  background: #1a73e8;
+  color: #ffffff;
+}
+
+.startBtn:hover {
+  background: #1765cc;
+}
+
+.startBtnRunning {
+  background: #d93025;
+}
+
+.startBtnRunning:hover {
+  background: #c5221f;
+}
+
+.resetBtn {
+  background: #e8f0fe;
+  color: #202124;
+}
+
+.resetBtn:hover {
+  background: #d2e3fc;
+}
+
+.soundBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #202124;
+  padding: 0;
+}
+
+.soundBtn:hover {
+  background: #f1f3f4;
+}
+
+.soundBtnMuted {
+  color: #5f6368;
+}
+
+.soundBtn svg {
+  width: 22px;
+  height: 22px;
+}
+
+@media (max-width: 480px) {
+  .time {
+    font-size: 40px;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+}

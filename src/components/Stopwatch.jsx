@@ -1,79 +1,85 @@
-import React, { useRef, useState } from "react";
-import styles from "./stopwatch.module.css";
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./app.module.css";
 
-function msToTime(duration) {
-  var milliseconds = Math.floor((duration % 1000) / 100),
-    seconds = Math.floor((duration / 1000) % 60),
-    minutes = Math.floor((duration / (1000 * 60)) % 60),
-    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+function formatStopwatch(ms) {
+  const totalCs = Math.floor(ms / 10);
+  const cs = totalCs % 100;
+  const totalSeconds = Math.floor(totalCs / 100);
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor(totalSeconds / 60) % 60;
+  const hours = Math.floor(totalSeconds / 3600);
 
-  hours = hours < 10 ? "0" + hours : hours;
-  minutes = minutes < 10 ? "0" + minutes : minutes;
-  seconds = seconds < 10 ? "0" + seconds : seconds;
+  const pad = (n, len = 2) => String(n).padStart(len, "0");
 
-  return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  if (hours > 0) {
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${pad(cs)}`;
+  }
+  return `${pad(minutes)}:${pad(seconds)}.${pad(cs)}`;
 }
-//   console.log(msToTime(300000))
 
+function Stopwatch({ soundButton }) {
+  const [elapsed, setElapsed] = useState(0);
+  const [running, setRunning] = useState(false);
+  const startedAt = useRef(null);
+  const baseElapsed = useRef(0);
+  const rafId = useRef(null);
 
-// OPTIMISED CODE TO AVOID UNNECESSARY RERENDERS
+  useEffect(() => {
+    if (!running) {
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+      return undefined;
+    }
 
-const Stopwatch = () => {
-  const [watch, setWatch] = useState(0);
-  // const [timerId, setTimerId] = useState(null);
+    const tick = () => {
+      setElapsed(baseElapsed.current + (Date.now() - startedAt.current));
+      rafId.current = requestAnimationFrame(tick);
+    };
 
-  const timerId = useRef(null);
-  // timerId = {current : null}
+    rafId.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
+  }, [running]);
 
   const start = () => {
-    if(!timerId.current){
-
-      let id = setInterval(() => {
-          setWatch((watch) => watch + 100);
-      }, 100);
-      timerId.current = id;
-      // setTimerId(id);
-    }
-   
+    startedAt.current = Date.now();
+    setRunning(true);
   };
 
-  const pause = () => {
-    clearInterval(timerId.current);
-    timerId.current = null;
+  const stop = () => {
+    setRunning(false);
+    baseElapsed.current = elapsed;
   };
 
   const reset = () => {
-    clearInterval(timerId.current);
-    timerId.current = null;
-    setWatch(0);
+    setRunning(false);
+    startedAt.current = null;
+    baseElapsed.current = 0;
+    setElapsed(0);
   };
 
   return (
-    <div className={styles.watch}>
-      <div className={styles.watchDiv}>
-        <h1>Stopwatch</h1>
-        <h2>{msToTime(watch)}</h2>
-        <button className={styles.btn1} onClick={start}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/840/840513.png"
-            alt=""
-          />
-        </button>
-        <button className={styles.btn2} onClick={pause}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/190/190521.png"
-            alt=""
-          />
-        </button>
-        <button className={styles.btn3} onClick={reset}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/5038/5038573.png"
-            alt=""
-          />
-        </button>
+    <>
+      <div className={styles.display}>
+        <h2 className={styles.time}>{formatStopwatch(elapsed)}</h2>
       </div>
-    </div>
+      <div className={styles.controls}>
+        <div className={styles.buttonGroup}>
+          <button
+            type="button"
+            className={`${styles.startBtn} ${running ? styles.startBtnRunning : ""}`}
+            onClick={running ? stop : start}
+          >
+            {running ? "STOP" : "START"}
+          </button>
+          <button type="button" className={styles.resetBtn} onClick={reset}>
+            RESET
+          </button>
+        </div>
+        {soundButton}
+      </div>
+    </>
   );
-};
+}
 
 export default Stopwatch;

@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders timer and stopwatch tabs", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText(/Timer/i)).toBeInTheDocument();
+  expect(screen.getByText(/Stopwatch/i)).toBeInTheDocument();
+  expect(screen.getByText("05m:00s")).toBeInTheDocument();
+  expect(screen.getByText("START")).toBeInTheDocument();
+  expect(screen.getByText("RESET")).toBeInTheDocument();
 });
